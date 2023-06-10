@@ -7,20 +7,22 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  Button,
 } from "react-native";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { MapPinIcon } from 'react-native-heroicons/solid'; 
-import ForeCast from "./ForeCast";
-import { useRouter } from "expo-router";
+import ForeCast from "../ForeCast";
+import { usePathname } from "expo-router";
 
 const App = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
   const [location, setLocation] = useState(["Hosur", "Krishnagiri", "Bangalore", "Chennai"]);
   const [weatherData, setWeatherData] = useState([]); 
-  const [searchLocation, setSearchLocation] = useState("Hosur");
-  const router = useRouter();  
+  const [searchLocation, setSearchLocation] = useState("Hosur"); 
+  const pathname = usePathname(); 
+  const queryLocation = pathname.split("/")[2]; 
+  console.log(queryLocation); 
+   
 
   const handleLocation = useCallback((loc) => {
    
@@ -30,9 +32,10 @@ const App = () => {
   }, []); 
 
   useEffect(() => {
+    
     const fetchTemp = async () => {
       try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${searchLocation}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`); 
+        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${queryLocation}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`); 
 
         const data = await response.json(); 
 
@@ -48,8 +51,6 @@ const App = () => {
       
 
   }, []); 
-
-  console.log(searchLocation)
 
   
 
@@ -67,7 +68,7 @@ const App = () => {
     >
       <StatusBar style="light" />
       <Image
-        source={require("../assets/images/bg.png")}
+        source={require("../../assets/images/bg.png")}
         style={{
           position: "absolute",
           height: "100%",
@@ -92,7 +93,6 @@ const App = () => {
           <View
             style={{
               display: "flex",
-              flexDirection: "column",
 
               justifyContent: "center",
               alignItems: "center ",
@@ -118,12 +118,7 @@ const App = () => {
                     padding: "10px",
                     border: "1px solid white",
                   }}
-                  onChangeText={text => setSearchLocation(text)}
                   
-                />
-                <Button 
-                  title="Search"
-                  onPress={() => router.push(`/search/${searchLocation}`) }
                 />
               </>
             ) : (
