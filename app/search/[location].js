@@ -10,55 +10,39 @@ import {
 } from "react-native";
 import { theme } from "../../theme";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
-import { MapPinIcon } from 'react-native-heroicons/solid'; 
+import { MapPinIcon } from "react-native-heroicons/solid";
 import ForeCast from "../ForeCast";
-import { usePathname } from "expo-router";
+import { useLocalSearchParams, usePathname } from "expo-router";
 
 const App = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
-  const [location, setLocation] = useState(["Hosur", "Krishnagiri", "Bangalore", "Chennai"]);
-  const [weatherData, setWeatherData] = useState([]); 
-  const [searchLocation, setSearchLocation] = useState("Hosur"); 
-  const pathname = usePathname(); 
-  const queryLocation = pathname.split("/")[2]; 
-  console.log(queryLocation); 
-   
+  const [locations, setLocation] = useState([1, 2, 3]);
+  const [weatherData, setWeatherData] = useState([]);
+  const [searchLocation, setSearchLocation] = useState("Hosur");
+  const pathname = usePathname();
+  const queryLocation = pathname.split("/")[2];
+  console.log(queryLocation);
+  const { location } = useLocalSearchParams();
 
-  const handleLocation = useCallback((loc) => {
-   
-    
-
-
-  }, []); 
+  const handleLocation = useCallback((loc) => {}, []);
 
   useEffect(() => {
-    
     const fetchTemp = async () => {
       try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${queryLocation}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`); 
+        const response = await fetch(
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`
+        );
 
-        const data = await response.json(); 
+        const data = await response.json();
 
-        setWeatherData(data); 
-
-      } catch(error) {
-        alert("NO Data")
-
+        setWeatherData(data);
+      } catch (error) {
+        alert("NO Data");
       }
-    }
-    fetchTemp(); 
-  
-      
+    };
+    fetchTemp();
+  }, []);
 
-  }, []); 
-
-  
-
-
-
-
-
- 
   return (
     <View
       style={{
@@ -118,7 +102,6 @@ const App = () => {
                     padding: "10px",
                     border: "1px solid white",
                   }}
-                  
                 />
               </>
             ) : (
@@ -136,7 +119,7 @@ const App = () => {
               <MagnifyingGlassIcon color="white" />
             </TouchableOpacity>
           </View>
-          {location.length > 0 && toggleSearch ? (
+          {locations.length > 0 && toggleSearch ? (
             <View
               style={{
                 position: "absolute",
@@ -147,52 +130,43 @@ const App = () => {
                 margin: "10px",
               }}
             >
-              {location.map((loc, index) => {
-                let showBorder = index + 1 != location.length; 
-                let borderClass = showBorder ? "" : ""
-                return(
-
-                
-                <TouchableOpacity
+              {locations?.map((loc, index) => {
+                let showBorder = index + 1 != location.length;
+                let borderClass = showBorder ? "" : "";
+                return (
+                  <TouchableOpacity
                     onPress={() => handleLocation(loc)}
-                  key={loc}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    border: "1px solid",
-                    padding: "10px",
-                    paddingLeft: "40px",
-                    paddingRight: "40px",
-                    borderBottomColor: "black",
-                    
-
-
-
-                  }}
-                >
-                    <MapPinIcon 
-                        size="20"
-                        color="gray"
-                    />
-                  <Text
+                    key={loc}
                     style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      border: "1px solid",
+                      padding: "10px",
+                      paddingLeft: "40px",
+                      paddingRight: "40px",
+                      borderBottomColor: "black",
+                    }}
+                  >
+                    <MapPinIcon size="20" color="gray" />
+                    <Text
+                      style={{
                         color: "black",
                         fontSize: "20px",
-                        marginLeft: "20px"
-                    }}
-                  >{loc}</Text>
-                </TouchableOpacity>)
-})}
+                        marginLeft: "20px",
+                      }}
+                    >
+                      {loc}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           ) : (
             <View></View>
           )}
         </View>
-        <ForeCast 
-          data={weatherData}
-        />
-
+        <ForeCast data={weatherData} />
       </SafeAreaView>
     </View>
   );

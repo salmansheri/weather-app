@@ -1,9 +1,9 @@
 export const apiKey = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/london%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json';
 
 export const weatherImages = {
-    'Partly cloudy': require('../assets/images/partlycloudy.png'),
+    'Partially cloudy': require('../assets/images/partlycloudy.png'),
     'Moderate rain': require('../assets/images/moderaterain.png'),
-    'Patchy rain possible': require('../assets/images/moderaterain.png'),
+    'Rain, Partially cloudy': require('../assets/images/moderaterain.png'),
     'Sunny': require('../assets/images/sun.png'),
     'Clear': require('../assets/images/sun.png'),
     'Overcast': require('../assets/images/cloud.png'),

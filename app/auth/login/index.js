@@ -1,7 +1,33 @@
-import React from "react";
+import axios from "axios";
+import { useRouter, Link } from "expo-router";
+import React, { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
 
 const Register = () => {
+  const [isLoading, setIsLoading] = useState(false); 
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const router = useRouter(); 
+
+  const handleLogin = async () => {
+    try {
+
+      setIsLoading(true); 
+     const response = await axios.post("http://localhost:5000/users/login", {
+      email: email, 
+      password: password,
+     }); 
+
+     const data = response.data; 
+     localStorage.setItem("email", data?.email); 
+     router.push("/"); 
+    } catch(error) {
+
+    }finally {
+      setIsLoading(false);
+    }
+    
+  }
   return (
     <View
       style={{
@@ -13,6 +39,18 @@ const Register = () => {
         gap: "10px",
       }}
     >
+       <View>
+          <Text
+            style={{
+              fontSize: "30px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Login
+          </Text>
+        </View>
+        <View></View>
       <View
         style={{
           width: "80%",
@@ -22,6 +60,7 @@ const Register = () => {
         <View>
           <Text style={{ fontSize: "20px" }}>Email</Text>
           <TextInput
+            onChangeText={setEmail}
             style={{
               marginVertical: "10px",
               border: "1px solid black",
@@ -33,6 +72,7 @@ const Register = () => {
         <View>
           <Text style={{ fontSize: "20px" }}>password</Text>
           <TextInput
+            onChangeText={setPassword}
             style={{
               marginVertical: "10px",
               border: "1px solid black",
@@ -42,7 +82,22 @@ const Register = () => {
           />
         </View>
       </View>
-      <Button title="Submit" />
+      <Button title={isLoading ? "Logging in" : "Submit"} onPress={handleLogin} />
+      <View
+        style={{
+          borderTop: "1px solid black",
+
+          
+        }}
+      >
+        <Text>
+          New to Weather app? <Link style={{color: "blue", textDecoration: "underline"}} href="/auth/register">
+            Register
+          </Link>
+        </Text>
+        
+
+      </View>
     </View>
   );
 };

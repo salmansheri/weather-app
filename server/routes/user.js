@@ -43,23 +43,20 @@ router.route("/register").post(async (req, res) => {
 
 router.route("/login").post(async (req, res) => {
     try {
-        const body  = req.body; 
+       
         const {
             email, 
             password
-        } = body; 
+        } = req.body; 
 
-        if(typeof email !== "string" || typeof password !== "string") {
-            throw new Error("Invalid credentials"); 
-        }
+      
 
+      
         const user = await prisma.user.findUnique({
             where: {
                 email: email,
             }
-
-        }); 
-
+        })
         if(!user || !user.hashedPassword) {
             throw new Error("Invalid Credentials");  
         }
@@ -67,7 +64,7 @@ router.route("/login").post(async (req, res) => {
         const isCorrentPassword = await bcrypt.compare(password, user?.hashedPassword);
 
         if(!isCorrentPassword) {
-            throw new Error("Invalid Credentials"); 
+            throw new Error("Password mismatch"); 
 
         }
 
