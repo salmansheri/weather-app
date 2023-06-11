@@ -8,7 +8,9 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
+  
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../theme";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { MapPinIcon } from "react-native-heroicons/solid";
@@ -26,7 +28,22 @@ const App = () => {
   const [weatherData, setWeatherData] = useState([]);
   const [searchLocation, setSearchLocation] = useState("Hosur");
   const router = useRouter();
-  const email = localStorage.getItem("email");
+  
+  const userEmail = async () => {
+    try {
+      const email = await AsyncStorage.getItem("email"); 
+      if(!email) {
+        return null; 
+      }
+
+      return {email}; 
+
+    } catch(err) {
+      console.log(err); 
+    }
+  }
+
+  const { email } = userEmail(); 
 
   const handleLocation = useCallback((loc) => {}, []);
 
@@ -47,9 +64,9 @@ const App = () => {
     fetchTemp();
   }, []);
 
-  if (!email) {
-    return <Redirect href="/auth/login" />;
-  }
+  // if (!email) {
+  //   return <Redirect href="/auth/login" />;
+  // }
 
   return (
     <View
