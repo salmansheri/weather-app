@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import { CalendarDaysIcon } from "react-native-heroicons/outline";
 import { theme } from "../theme";
 import { weatherImages } from "../constants";
+import { useRouter } from 'expo-router'; 
 
 const ForeCast = ({ data }) => {
   console.log(data);
+  const router = useRouter(); 
 
   return (
     <View
@@ -202,7 +204,9 @@ const ForeCast = ({ data }) => {
         showsHorizontalScrollIndicator={false}
       >
         {data?.days?.map((day, index) => (
-          <View
+          <Pressable
+            onPress={() => router.push(`/day?location=${data?.resolvedAddress}&day=${day?.datetime}`)}
+            
             key={index}
             style={{
               display: "flex",
@@ -242,7 +246,7 @@ const ForeCast = ({ data }) => {
             >
               {day?.temp}&#126;
             </Text>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>

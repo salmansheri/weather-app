@@ -18,5 +18,16 @@ model User {
   email String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  vacations Vacation[]
   
+}
+
+model Vacation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  place String?
+  date String?
+  userEmail String 
+
+  user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }

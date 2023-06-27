@@ -29,23 +29,13 @@ const App = () => {
   const [searchLocation, setSearchLocation] = useState("Hosur");
   const router = useRouter();
   
-  const userEmail = async () => {
-    try {
-      const email = await AsyncStorage.getItem("email"); 
-      if(!email) {
-        return null; 
-      }
 
-      return {email}; 
 
-    } catch(err) {
-      console.log(err); 
-    }
-  }
 
-  const { email } = userEmail(); 
+  
 
-  const handleLocation = useCallback((loc) => {}, []);
+  // const handleLocation = useCallback((loc) => {}, []);
+
 
   useEffect(() => {
     const fetchTemp = async () => {
@@ -67,6 +57,22 @@ const App = () => {
   // if (!email) {
   //   return <Redirect href="/auth/login" />;
   // }
+
+  const handleLogout = () => {
+    if(!email) {
+      return; 
+    }
+
+    localStorage.removeItem("email"); 
+
+
+  }
+
+  const email = localStorage.getItem("email"); 
+
+  if(!email) {
+    return <Redirect href="/auth/login" />
+  }
 
   return (
     <View
@@ -114,6 +120,7 @@ const App = () => {
               gap: "5px",
             }}
           >
+          
             {toggleSearch ? (
               <>
                 <TextInput
@@ -125,7 +132,7 @@ const App = () => {
                     marginTop: "10px",
                     height: "16px",
                     borderRadius: "5px",
-                    padding: "10px",
+                    padding: "20px",
                     border: "1px solid white",
                   }}
                   onChangeText={(text) => setSearchLocation(text)}
@@ -161,41 +168,28 @@ const App = () => {
                 margin: "10px",
               }}
             >
-              {location.map((loc, index) => {
-                let showBorder = index + 1 != location.length;
-                let borderClass = showBorder ? "" : "";
-                return (
-                  <TouchableOpacity
-                    onPress={() => handleLocation(loc)}
-                    key={loc}
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      border: "1px solid",
-                      padding: "10px",
-                      paddingLeft: "40px",
-                      paddingRight: "40px",
-                      borderBottomColor: "black",
-                    }}
-                  >
-                    <MapPinIcon size="20" color="gray" />
-                    <Text
-                      style={{
-                        color: "black",
-                        fontSize: "20px",
-                        marginLeft: "20px",
-                      }}
-                    >
-                      {loc}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
+            
             </View>
           ) : (
             <View></View>
           )}
+
+          <View
+            style={{
+              display:"flex", 
+              alignItems: "end", 
+              paddingHorizontal: "10px", 
+              borderRadius: "10px", 
+              justifyContent:"flex-end"
+            }}
+          >
+            <Button 
+              title="Logout"
+              onPress={handleLogout}
+             
+
+            />
+          </View>
         </View>
         <ForeCast data={weatherData} />
       </SafeAreaView>

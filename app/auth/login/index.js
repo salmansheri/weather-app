@@ -20,7 +20,7 @@ const Register = () => {
      }); 
 
      const data = response.data; 
-    //  localStorage.setItem("email", data?.email); 
+     localStorage.setItem("email", data?.email); 
     //  await AsyncStorage.setItem("email",data?.email); 
      router.push("/"); 
     } catch(error) {
