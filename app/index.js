@@ -10,12 +10,14 @@ import {
   Button,
   
 } from "react-native";
+import { BiUser } from 'react-icons/bi'; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../theme";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import ForeCast from "./ForeCast";
 import { Redirect, useRouter } from "expo-router";
+import { LuFileSearch2 } from 'react-icons/lu'; 
 
 const App = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
@@ -58,15 +60,7 @@ const App = () => {
   //   return <Redirect href="/auth/login" />;
   // }
 
-  const handleLogout = () => {
-    if(!email) {
-      return; 
-    }
-
-    localStorage.removeItem("email"); 
-
-
-  }
+  
 
   const email = localStorage.getItem("email"); 
 
@@ -81,6 +75,7 @@ const App = () => {
         position: "relative",
       }}
     >
+     
       <StatusBar style="light" />
       <Image
         source={require("../assets/images/bg.png")}
@@ -105,6 +100,7 @@ const App = () => {
             zIndex: 999,
           }}
         >
+          
           <View
             style={{
               display: "flex",
@@ -120,6 +116,8 @@ const App = () => {
               gap: "5px",
             }}
           >
+
+
           
             {toggleSearch ? (
               <>
@@ -173,23 +171,29 @@ const App = () => {
           ) : (
             <View></View>
           )}
-
           <View
             style={{
-              display:"flex", 
-              alignItems: "end", 
-              paddingHorizontal: "10px", 
-              borderRadius: "10px", 
-              justifyContent:"flex-end"
+              width: "fit-content", 
+              padding: "10px", 
+              display: "flex", 
+              flexDirection: "column", 
+              gap: "10px", 
             }}
           >
-            <Button 
-              title="Logout"
-              onPress={handleLogout}
-             
+           <Button 
+            title={<BiUser size={30} />}
+            onPress={() => router.push("/profile")}
+            
+            
+           />
+           <Button 
+              title={<LuFileSearch2 size={30} />}
+              onPress={() => router.push("/search-by-day")}
 
-            />
+           />
           </View>
+
+          
         </View>
         <ForeCast data={weatherData} />
       </SafeAreaView>

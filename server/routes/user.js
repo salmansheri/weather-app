@@ -5,8 +5,25 @@ import bcrypt from "bcrypt";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.route("/").get((req, res) => {
-  res.status(200).json({ messsage: "this is a user route" });
+router.route("/:email").get(async (req, res) => {
+  const { email }  = req.params;
+  if(!email) {
+    return res.status(404).json({ message: "Email is required "}); 
+
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email, 
+    }, 
+    
+    include: {
+      vacations: true, 
+    }, 
+    
+  })
+
+  return res.status(200).json(user); 
 });
 
 router.route("/register").post(async (req, res) => {

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View } from 'react-native'; 
-import { useLocalSearchParams } from 'expo-router';
+import { Text, Button, View } from 'react-native'; 
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from 'axios';
 import Day from './Day';
+import { BiHomeAlt } from 'react-icons/bi'; 
 
 const DayPage = () => {
-    const searchParams = useLocalSearchParams(); 
+    const searchParams = useLocalSearchParams();
+    const router = useRouter();  
     const location = searchParams.location; 
     const day = searchParams.day; 
     console.log(location); 
@@ -36,9 +38,20 @@ const DayPage = () => {
   return (
     <View
         style={{
-            paddingHorizontal: "10px",
+            padding: "20px",
         }}
     >
+         <View
+        style={{
+          width: "fit-content", 
+        }}
+      >
+
+      <Button 
+        title={<BiHomeAlt size={30} />}
+        onPress={() => router.push("/")}
+        />
+        </View>
         <View 
             style={{
                 marginVertical: "30px",

@@ -19,3 +19,16 @@ export const weatherImages = {
     'Mist': require('../assets/images/mist.png'),
     'other': require('../assets/images/moderaterain.png')
 }
+
+
+export const weekdays = [
+    "Sunday", 
+    "Monday", 
+    "Tuesday",
+    "Wednesday",
+    "Thursday", 
+    "Friday", 
+    "Saturday", 
+    
+
+]

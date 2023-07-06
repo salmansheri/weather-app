@@ -2,8 +2,9 @@ import React from "react";
 import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import { CalendarDaysIcon } from "react-native-heroicons/outline";
 import { theme } from "../theme";
-import { weatherImages } from "../constants";
+import { weatherImages, weekdays } from "../constants";
 import { useRouter } from 'expo-router'; 
+import { convertDateToDay } from "../lib/actions/dayToString";
 
 const ForeCast = ({ data }) => {
   console.log(data);
@@ -211,9 +212,9 @@ const ForeCast = ({ data }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "24px",
+              
               borderRadius: "20%",
-              height: "150px",
+              height: "200px",
               paddingHorizontal: "40px",
               marginTop: "20px",
               paddingVertical: "10px",
@@ -236,6 +237,14 @@ const ForeCast = ({ data }) => {
               }}
             >
               {day?.datetime}
+            </Text>
+            <Text
+              style={{
+                color: "white", 
+              }}
+            >
+              {weekdays[convertDateToDay(day?.datetime)]}
+
             </Text>
             <Text
               style={{

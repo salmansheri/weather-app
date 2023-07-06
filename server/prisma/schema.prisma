@@ -28,6 +28,7 @@ model Vacation {
   place String?
   date String?
   userEmail String 
+  
 
   user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
