@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { BiHomeAlt } from 'react-icons/bi'; 
+import { BiHomeAlt } from "react-icons/bi";
 
 const SearchByDay = () => {
   const [searchLocation, setSearchLocation] = useState();
@@ -15,15 +15,12 @@ const SearchByDay = () => {
 
   return (
     <View style={styles.container}>
-        <View
-            style={styles.btn}
-        >
-
-        <Button 
-            title={<BiHomeAlt size={30} />}
-            onPress={() => router.push("/")}
-            />
-            </View>
+      <View style={styles.btn}>
+        <Button
+          title={<BiHomeAlt size={30} />}
+          onPress={() => router.push("/")}
+        />
+      </View>
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="Enter Date"

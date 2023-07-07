@@ -30,7 +30,7 @@ const App = () => {
     const fetchTemp = async () => {
       try {
         const response = await fetch(
-          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`,
         );
 
         const data = await response.json();

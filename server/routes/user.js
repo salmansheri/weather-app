@@ -6,24 +6,22 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.route("/:email").get(async (req, res) => {
-  const { email }  = req.params;
-  if(!email) {
-    return res.status(404).json({ message: "Email is required "}); 
-
+  const { email } = req.params;
+  if (!email) {
+    return res.status(404).json({ message: "Email is required " });
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      email: email, 
-    }, 
-    
-    include: {
-      vacations: true, 
-    }, 
-    
-  })
+      email: email,
+    },
 
-  return res.status(200).json(user); 
+    include: {
+      vacations: true,
+    },
+  });
+
+  return res.status(200).json(user);
 });
 
 router.route("/register").post(async (req, res) => {
@@ -65,7 +63,7 @@ router.route("/login").post(async (req, res) => {
 
     const isCorrentPassword = await bcrypt.compare(
       password,
-      user?.hashedPassword
+      user?.hashedPassword,
     );
 
     if (!isCorrentPassword) {
@@ -82,6 +80,3 @@ router.route("/login").post(async (req, res) => {
 });
 
 export default router;
-
-
-

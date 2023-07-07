@@ -3,42 +3,37 @@ import React, { useCallback, useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
 
 const Register = () => {
-  const router = useRouter(); 
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
-  const [name, setName] = useState(""); 
-  const [isLoading, setIsLoading] = useState(false); 
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleRegister = async () => {
     try {
       setIsLoading(true);
       const response = await fetch("http://localhost:5000/users/register", {
         method: "POST",
-        headers:{
+        headers: {
           "Content-Type": "application/json",
-
-
         },
         body: JSON.stringify({
-          name, 
-          password, 
+          name,
+          password,
           email,
-        })
-      })
+        }),
+      });
 
-      if(response.ok) {
+      if (response.ok) {
         alert("successfully registered");
-        router.push("/auth/login"); 
+        router.push("/auth/login");
       }
-
-    } catch(error) {
-      alert(error.message)
-      console.log(error); 
-
+    } catch (error) {
+      alert(error.message);
+      console.log(error);
     } finally {
-      setIsLoading(false); 
-
+      setIsLoading(false);
     }
-  }
+  };
   return (
     <View
       style={{
@@ -82,7 +77,6 @@ const Register = () => {
           <Text style={{ fontSize: "20px" }}>Email</Text>
           <TextInput
             onChangeText={setEmail}
-           
             style={{
               marginVertical: "10px",
               border: "1px solid black",
@@ -95,7 +89,6 @@ const Register = () => {
           <Text style={{ fontSize: "20px" }}>password</Text>
           <TextInput
             onChangeText={setPassword}
-
             style={{
               marginVertical: "10px",
               border: "1px solid black",
@@ -105,22 +98,25 @@ const Register = () => {
           />
         </View>
       </View>
-      <Button title={isLoading ? "Creating" : "Submit"} onPress={handleRegister} />
+      <Button
+        title={isLoading ? "Creating" : "Submit"}
+        onPress={handleRegister}
+      />
 
       <View
         style={{
           borderTop: "1px solid black",
-
-          
         }}
       >
         <Text>
-          Already Have an Account? <Link style={{color: "blue", textDecoration: "underline"}} href="/auth/login">
+          Already Have an Account?{" "}
+          <Link
+            style={{ color: "blue", textDecoration: "underline" }}
+            href="/auth/login"
+          >
             Login
           </Link>
         </Text>
-        
-
       </View>
     </View>
   );

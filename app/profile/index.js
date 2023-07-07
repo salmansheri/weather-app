@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
 import axios from "axios";
-import { AiFillDelete } from "react-icons/ai";
-import { days, weekdays } from "../../constants";
-import { convertDateToDay } from "../../lib/actions/dayToString";
 import { useRouter } from "expo-router";
-import { BiHomeAlt } from 'react-icons/bi'; 
+import React, { useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
+import { BiHomeAlt } from "react-icons/bi";
+import { Button, Text, View } from "react-native";
+import { weekdays } from "../../constants";
+import { convertDateToDay } from "../../lib/actions/dayToString";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -29,16 +29,17 @@ const ProfilePage = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/vacation/${id}`
+        `http://localhost:5000/vacation/${id}`,
       );
 
       const data = response.data;
 
       const filteredVacations = userData?.vacations?.filter(
-        (item) => item?.id !== id
+        (item) => item?.id !== id,
       );
 
       setVacations(filteredVacations);
+      window.location.reload();
     } catch (error) {
       alert("something went wrong");
     }
@@ -70,7 +71,10 @@ const ProfilePage = () => {
           width: "fit-content",
         }}
       >
-        <Button title={<BiHomeAlt size={30} />} onPress={() => router.push("/")} />
+        <Button
+          title={<BiHomeAlt size={30} />}
+          onPress={() => router.push("/")}
+        />
       </View>
       <View
         style={{

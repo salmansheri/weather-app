@@ -3,12 +3,12 @@ import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import { CalendarDaysIcon } from "react-native-heroicons/outline";
 import { theme } from "../theme";
 import { weatherImages, weekdays } from "../constants";
-import { useRouter } from 'expo-router'; 
+import { useRouter } from "expo-router";
 import { convertDateToDay } from "../lib/actions/dayToString";
 
 const ForeCast = ({ data }) => {
   console.log(data);
-  const router = useRouter(); 
+  const router = useRouter();
 
   return (
     <View
@@ -206,13 +206,16 @@ const ForeCast = ({ data }) => {
       >
         {data?.days?.map((day, index) => (
           <Pressable
-            onPress={() => router.push(`/day?location=${data?.resolvedAddress}&day=${day?.datetime}`)}
-            
+            onPress={() =>
+              router.push(
+                `/day?location=${data?.resolvedAddress}&day=${day?.datetime}`,
+              )
+            }
             key={index}
             style={{
               display: "flex",
               alignItems: "center",
-              
+
               borderRadius: "20%",
               height: "200px",
               paddingHorizontal: "40px",
@@ -240,11 +243,10 @@ const ForeCast = ({ data }) => {
             </Text>
             <Text
               style={{
-                color: "white", 
+                color: "white",
               }}
             >
               {weekdays[convertDateToDay(day?.datetime)]}
-
             </Text>
             <Text
               style={{

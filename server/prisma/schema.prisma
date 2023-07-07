@@ -28,6 +28,8 @@ model Vacation {
   place String?
   date String?
   userEmail String 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
 
   user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)

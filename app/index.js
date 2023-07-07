@@ -8,16 +8,15 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
-  
 } from "react-native";
-import { BiUser } from 'react-icons/bi'; 
+import { BiUser } from "react-icons/bi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../theme";
 import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import ForeCast from "./ForeCast";
 import { Redirect, useRouter } from "expo-router";
-import { LuFileSearch2 } from 'react-icons/lu'; 
+import { LuFileSearch2 } from "react-icons/lu";
 
 const App = () => {
   const [toggleSearch, setToggleSearch] = useState(false);
@@ -30,20 +29,14 @@ const App = () => {
   const [weatherData, setWeatherData] = useState([]);
   const [searchLocation, setSearchLocation] = useState("Hosur");
   const router = useRouter();
-  
-
-
-
-  
 
   // const handleLocation = useCallback((loc) => {}, []);
-
 
   useEffect(() => {
     const fetchTemp = async () => {
       try {
         const response = await fetch(
-          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${searchLocation}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${searchLocation}%20?unitGroup=metric&key=WP9J6TZ76WZDMHLRW7W3FD2R5&contentType=json`,
         );
 
         const data = await response.json();
@@ -60,12 +53,10 @@ const App = () => {
   //   return <Redirect href="/auth/login" />;
   // }
 
-  
+  const email = localStorage.getItem("email");
 
-  const email = localStorage.getItem("email"); 
-
-  if(!email) {
-    return <Redirect href="/auth/login" />
+  if (!email) {
+    return <Redirect href="/auth/login" />;
   }
 
   return (
@@ -75,7 +66,6 @@ const App = () => {
         position: "relative",
       }}
     >
-     
       <StatusBar style="light" />
       <Image
         source={require("../assets/images/bg.png")}
@@ -100,7 +90,6 @@ const App = () => {
             zIndex: 999,
           }}
         >
-          
           <View
             style={{
               display: "flex",
@@ -116,9 +105,6 @@ const App = () => {
               gap: "5px",
             }}
           >
-
-
-          
             {toggleSearch ? (
               <>
                 <TextInput
@@ -165,35 +151,28 @@ const App = () => {
                 borderRadius: "10px",
                 margin: "10px",
               }}
-            >
-            
-            </View>
+            ></View>
           ) : (
             <View></View>
           )}
           <View
             style={{
-              width: "fit-content", 
-              padding: "10px", 
-              display: "flex", 
-              flexDirection: "column", 
-              gap: "10px", 
+              width: "fit-content",
+              padding: "10px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
             }}
           >
-           <Button 
-            title={<BiUser size={30} />}
-            onPress={() => router.push("/profile")}
-            
-            
-           />
-           <Button 
+            <Button
+              title={<BiUser size={30} />}
+              onPress={() => router.push("/profile")}
+            />
+            <Button
               title={<LuFileSearch2 size={30} />}
               onPress={() => router.push("/search-by-day")}
-
-           />
+            />
           </View>
-
-          
         </View>
         <ForeCast data={weatherData} />
       </SafeAreaView>

@@ -8,7 +8,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { convertDateToDay } from "../../lib/actions/dayToString";
 
 const Day = ({ days }) => {
-    const router = useRouter(); 
+  const router = useRouter();
   const { day, location } = useLocalSearchParams();
   const userEmail = localStorage.getItem("email");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,8 +21,8 @@ const Day = ({ days }) => {
         date: day,
       });
 
-      alert("Vacation has been successfully Created") 
-      router.push("/profile"); 
+      alert("Vacation has been successfully Created");
+      router.push("/profile");
     } catch (error) {
       alert("someting went wrong");
     } finally {
@@ -53,8 +53,8 @@ const Day = ({ days }) => {
           </Text>
           <Text
             style={{
-              fontSize: "30px", 
-              fontWeight: "bold", 
+              fontSize: "30px",
+              fontWeight: "bold",
             }}
           >
             {weekdays[convertDateToDay(day?.datetime)]}
