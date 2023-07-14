@@ -17,7 +17,11 @@ router.route("/:email").get(async (req, res) => {
     },
 
     include: {
-      vacations: true,
+      vacations: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
